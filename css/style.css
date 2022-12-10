@@ -1,0 +1,176 @@
+* {
+    font-family: 'ZenKurenaido';
+}
+
+body {
+    background-color: #222831;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title {
+    font-size: 6.5rem;
+    color: #EEEEEE;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+}
+
+#name, .boton {
+    width: 18rem;
+    color: #EEEEEE;
+}
+
+#name {
+    border-bottom: 1px solid #EEE;
+}
+
+.boton {
+    height: 3rem;
+    background-color: #D65A31;
+    border-radius: 0px;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+}
+
+.boton:hover {
+    background-color: rgba(214, 90, 49, 0.85);
+    transition: 0.3s;
+}
+
+/*Game page*/
+.container-game {
+    justify-content: flex-start;
+    align-items: inherit;
+}
+
+.subtitle {
+    font-size: 5rem;
+    color: #D65A31;
+}
+
+.center-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.text {
+    font-size: 2.5rem;
+    color: #EEE;
+}
+
+.images {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.element, .element-button {
+    width: 219.5px;
+    height: 227.5px;
+}
+
+.element {
+    display: inline-block;
+    background-size: cover;
+    margin: 25px 0;
+}
+
+.element-button {
+    padding: 0;
+    background: none;
+    border: none;
+}
+
+.element-rock, .cpu-rock {
+    background-image: url(../img/rock.svg);
+}
+
+.element-paper, .cpu-paper {
+    background-image: url(../img/paper.svg);
+}
+
+.element-scissors, .cpu-scissors {
+    background-image: url(../img/scissors.svg);
+}
+
+.element-rock:hover,  .element-paper:hover,  .element-scissors:hover, .element-button:hover {
+    filter: invert(47%) sepia(23%) saturate(5207%) hue-rotate(343deg) brightness(89%) contrast(86%);
+    transition: 0.1s;
+    cursor: pointer;
+}
+
+/*Responsive*/
+@media (min-width: 300px) and (max-width:689px) {
+    .title, .subtitle {
+        font-size: 4rem;
+    }
+
+    #name, #play {
+        width: 16rem;
+    }
+
+    .element, .element-button {
+        width: 84px;
+        height: 87.5px; 
+    }
+
+    .element, .image {
+        margin: 20px 0;
+    }
+
+    .form {
+        width: 90%;
+        margin: 1rem 0 !important;
+        padding: 1rem 0 !important;
+    }
+
+    label, .boton {
+        font-size: 1.7rem;
+    }
+
+    .formButton {
+        margin: 8px;
+    }
+
+    .boton {
+        width: 16rem;
+        height: 3.5rem;
+    }
+}
+
+@media (min-width: 690px) and (max-width: 1440px) {
+    .title {
+        font-size: 5rem;
+    }
+
+    .element, .element-button, .image {
+        width: 151.5px;
+        height: 156.5px;
+    }
+    .form {
+        width: 100%;
+        margin: 1rem 0 !important;
+        padding: 1rem 0 !important;
+    }
+
+    label, .boton {
+        font-size: 1.2rem;
+    }
+
+    .formButton {
+        margin: 8px;
+    }
+}
