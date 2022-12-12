@@ -1,4 +1,8 @@
-var cpu = [1, 2, 3];
+import { cpuPlayers } from './player-list.js';
+
+var playerName = localStorage.getItem('Name');
+var best = localStorage.getItem('Best');
+var opponent;
 var playerChoose = 0;
 var cpuChoose = 0;
 var winner = 0;
@@ -149,8 +153,8 @@ function checkWinner(playerChoose, cpuChoose) {
 function game() {
     $('.element-button').prop('disabled', true);
     
-    cpuChoose = getRandom(cpu);
-
+    cpuChoose = getRandom(opponent.pickProbability);
+    
     cpuMove(cpuChoose);
 
     winner = checkWinner(playerChoose, cpuChoose);
@@ -159,13 +163,15 @@ function game() {
 }
 
 function showWins() {
-    $('#round-number, h3, .element').fadeOut(3500);
+    $('#round-number, h3, .element').fadeOut(3000);
     
-    $('#round-status').fadeOut(3500, function(){
+    $('#round-status').fadeOut(3000, function(){
         $(this).addClass('center-item');
     
-        $(this).text("Wins: " + wins);
+        $(this).text('Wins: ' + wins);
     
+        $(this).append('<br class="br-best">Best: ' + best);
+
         $(this).fadeIn(1000);
         
         $('.element').hide();
@@ -193,25 +199,29 @@ function finishRound(winner) {
 }
 
 function nextRound() {
-    $('#round-number').text("Round " + roundNumber);
-
     $('#round-status').fadeOut(2000, function() {
+        $('#round-number').text('Round ' + roundNumber);
+
         $(this).removeClass('center-item');
     
-        $(this).text("VS");
+        $(this).text('VS');
         
-        $('#round-number,h3').fadeIn(3500);
+        $('#round-number, h3').fadeIn(3000);
 
-        reloadElements(3500);
+        reloadElements(3000);
 
-        $(this).fadeIn(3500);
+        $(this).fadeIn(3000);
 
         $('.element-button').prop('disabled', false);
     });
 }
 
 function startGame() {
-    $('#round-number').text("Round " + roundNumber);
+    loadOpponent();
+
+    $('#round-number').text('Round ' + roundNumber);
+
+    $('#player-name').text(playerName);
 
     $('#player-rock').click(function(){
         playerChoose = 1;
@@ -239,28 +249,30 @@ function startGame() {
 }
 
 function draw() {
-    $('#round-status').text("It's a draw!");
+    $('#round-status').text('It\'s a draw!');
 
     showWins();
 }
 
 function win() {
-    $('#round-status').text("You win!");
+    $('#round-status').text('You win!');
 
     ++wins;
 
     ++roundNumber;
 
+    checkBest();
+
     showWins();
 }
 
 function lose() {
-    $('#round-status').text("You lose!");
+    $('#round-status').text('You lose!');
 
+    $('#round-number, h3, .element, #round-status').fadeOut(3000);
+    
     restartGame();
 
-    $('#round-number, h3, .element, #round-status').fadeOut(3500);
-    
     nextRound();
 }
 
@@ -269,7 +281,30 @@ function restartGame() {
     wins = 0;
 }
 
+function checkBest() {
+    if (wins >= best ) {
+        best = wins;
+
+        localStorage.setItem('Best', wins);
+    }
+}
+
+function loadOpponent() {
+    opponent = getRandom(cpuPlayers);
+
+    $('#opponent-name').text(opponent.name);
+
+    $('#opponent-probabilities').text('Probabilities: ');
+    
+    $('#opponent-probabilities').append('<br class="br-probabilities">Rock: ' + opponent.probability.rockProbability*10
+    + '% ' + '<br class="br-probabilities">Paper: ' + opponent.probability.paperProbability*10
+    + '% ' + '<br class="br-probabilities">Scissors: ' + opponent.probability.scissorsProbability*10
+    + '%');
+}
+
 function reloadElements(ms) {
+    loadOpponent();
+
     $('.element').fadeIn(ms);
 }
 
